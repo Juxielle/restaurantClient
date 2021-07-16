@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         fontStyle: 'italic',
-        backgroundColor: '#fb7f35',
+        backgroundColor: '#248e44',
         margin: 2,
         marginBottom: 2,
     },
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
     search: {
         height: 50,
         fontSize: 14,
-        borderBottomWidth: 2,
+        borderBottomWidth: 1,
         borderBottomColor: 'grey',
         fontStyle: 'italic',
         fontSize: 20,

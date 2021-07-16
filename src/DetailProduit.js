@@ -42,7 +42,7 @@ const DetailProduit = (props) => {
                         </View>
                         <View style={_get_style().price}>
                             <View style={_get_style().price1}>
-                                <Texte propriete={[produit.prix+' F CFA', 25, 'bold', 'normal', 'serif', '#fb7f35']}/>
+                                <Texte propriete={[produit.prix+' F CFA', 25, 'bold', 'normal', 'serif', '#248e44']}/>
                             </View>
                         </View>
                     </View>
@@ -129,7 +129,7 @@ function _get_style(){
             },
             btn2: {
                 flex: 1,
-                backgroundColor: '#fb7f35',
+                backgroundColor: '#248e44',
                 justifyContent: 'center',
                 alignItems: 'center',
                 margin: 2,
@@ -162,22 +162,3 @@ function _get_style(){
 }
 
 export default DetailProduit;
-
-
-
-/*
-
-                <View style={_get_style().container_cat}>
-                    <View style={_get_style().texte_cat}>
-                        <Texte propriete={['Catégorys', 12, 'bold', 'italic', 'arial', '#11ac00']}/>
-                    </View>
-                    <View style={_get_style().container_img}>
-                        <View style={_get_style().img_cat}><ProduitSimilaire /></View>
-                        <View style={_get_style().img_cat}><ProduitSimilaire /></View>
-                        <View style={_get_style().img_cat}><ProduitSimilaire /></View>
-                        <View style={_get_style().img_cat}><ProduitSimilaire /></View>
-                        <View style={_get_style().img_cat}><ProduitSimilaire /></View>
-                    </View>
-                </View>
-
-*/

@@ -22,7 +22,7 @@ export default class Produit_home extends React.Component {
 
                     <View style={this._get_style().btn_price}>
                         <View style={this._get_style().price}>
-                            <Texte propriete={[prop.prix+' F CFA', 14, 'bold', 'italic', 'serif', '#fb7f35']}/>
+                            <Texte propriete={[prop.prix+' F CFA', 14, 'bold', 'italic', 'serif', '#248e44']}/>
                         </View>
                     </View>
                 </View>
