@@ -1,11 +1,14 @@
 import React, {useEffect, useState} from 'react';
-import { StyleSheet, Text, Image, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Modal, Image, TouchableOpacity, View } from 'react-native';
 
 import Texte from './composants/Texte'
+import Localisation from './composants/Localisation';
 
 const DetailProduit = (props) => {
 
-    const [qte, setQte] = useState(0);
+    const [qte, setQte] = useState(1);
+    const [quartier, setQuartier] = useState('');
+    const [modalVisible, setModalVisible] = useState(false);
     const produit = props.route.params.produit;
     const id = props.route.params.id;
 
@@ -14,19 +17,27 @@ const DetailProduit = (props) => {
     }, [])
 
     const _displayMenu = ()=>{
-        props.navigation.navigate('Localisation', {id: id, qte: qte})
+        props.navigation.push('Map')
+        //setModalVisible(true)
+    }
+
+    const handleDialog = (nom)=>{
+        setQuartier(nom)
+        console.log(quartier)
+        setModalVisible(false)
     }
 
     const quantite = (typeBtn)=>{
         if(typeBtn){
             setQte(qte+1);
-        }else if(qte>0){
+        }else if(qte>1){
             setQte(qte-1);
         }
     }
 
     return (
         <View style={_get_style().container}>
+
             <View style={_get_style().container_img}>
                 <Image
                     style={_get_style().img}
@@ -38,11 +49,11 @@ const DetailProduit = (props) => {
                 <View style={_get_style().container_title_price}>
                     <View style={_get_style().title_price}>
                         <View style={_get_style().title}>
-                            <Texte propriete={[produit.libelle, 16, 'bold', 'normal', 'serif', 'black']}/>
+                            <Texte propriete={[produit.libelle, 15, 'bold', 'normal', 'serif', 'black']}/>
                         </View>
                         <View style={_get_style().price}>
                             <View style={_get_style().price1}>
-                                <Texte propriete={[produit.prix+' F CFA', 25, 'bold', 'normal', 'serif', '#248e44']}/>
+                                <Texte propriete={[produit.prix+' F CFA', 20, 'bold', 'normal', 'serif', '#248e44']}/>
                             </View>
                         </View>
                     </View>
@@ -61,7 +72,7 @@ const DetailProduit = (props) => {
                 </View>
                 
                 <TouchableOpacity style={_get_style().btn2} onPress={()=>_displayMenu()}>
-                        <Texte propriete={['Commander maintenant', 20, 'bold', 'normal', 'serif', 'white']}/>
+                        <Texte propriete={['Commandez', 15, 'normal', 'normal', 'serif', 'white']}/>
                 </TouchableOpacity>
             </View>
 
@@ -82,20 +93,19 @@ function _get_style(){
                 borderRadius: 4,
             },
             img: {
-                height: 150,
+                height: 180,
                 borderRadius: 4,
             },
             container_detail: {
                 flex: 10,
                 flexDirection: 'column',
-                marginTop: -20,
                 borderRadius: 20,
                 backgroundColor: '#fff',
             },
             container_title_price: {
                 flex: 6,
                 flexDirection: 'row',
-                paddingTop: 15,
+                paddingTop: 4,
                 paddingLeft: 4,
                 marginBottom: 4,
             },

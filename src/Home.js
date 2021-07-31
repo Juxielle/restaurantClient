@@ -4,9 +4,10 @@ import { StyleSheet, Text, TouchableOpacity, FlatList, SafeAreaView, View } from
 import firebase from 'firebase';
 
 import Produit_home from './composants/Produit_home'
+import RoundCat from './composants/RoundCat';
 
 const Home = (props) => {
-    const [donnees, setDonnees] = useState(0);
+    const [donnees, setDonnees] = useState([]);
 
     useEffect(() => {
         var firebaseConfig = {
@@ -24,7 +25,7 @@ const Home = (props) => {
          }else {
             firebase.app(); // if already initialized, use that one
          }
-
+         
         firebase.database().ref('categorie').on('value', (data)=>{
             setDonnees(Object.values(data.toJSON()))
         })
@@ -36,6 +37,13 @@ const Home = (props) => {
 
     return (
         <SafeAreaView style={styles.container}>
+            <View style={styles.cat}>
+                {donnees.map((data) => 
+                    <TouchableOpacity onPress={()=>detailProduit(donnees.indexOf(data)+1)}>
+                        <RoundCat key={donnees.indexOf(data).toString()} datas = {data} couleurT='#248e44' couleurB='#f3f3f1'/>
+                    </TouchableOpacity>)
+                }
+            </View>
             <FlatList
                 data = {donnees}
                 keyExtractor={item => donnees.indexOf(item).toString()}
@@ -92,6 +100,11 @@ const styles = StyleSheet.create({
         padding: 2,
         marginLeft: 1,
         marginRight: 8,
+    },
+    cat:{
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
 })
 

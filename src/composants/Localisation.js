@@ -1,19 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import { StyleSheet, Text, TextInput, Image, TouchableOpacity, View} from 'react-native';
 
-class Localisation extends React.Component{
-    constructor(props){
-        super(props)
-        this.state = {
-            lieu: '',
-        }
+const Localisation = (props) => {
+
+    const [quartier, setQuartier] = useState('');
+
+    const change_page = ()=>{
+        props.handleDialog(quartier)
     }
 
-    change_page(){
-        this.props.navigation.navigate('Home');
-    }
-
-    render(){
     return (
         <View style={styles.container}>
 
@@ -22,6 +17,7 @@ class Localisation extends React.Component{
                     <TextInput
                         style={styles.search}
                         placeholder="Saisir le lieu de livraison"
+                        onChangeText={setQuartier}
                     />
                 </View>
 
@@ -29,13 +25,13 @@ class Localisation extends React.Component{
                     <Image style={styles.img_loc} source={{uri: 'https://firebasestorage.googleapis.com/v0/b/restaurant-5e5c6.appspot.com/o/map.jpg?alt=media&token=a9e06543-34bb-46b0-849a-9102fa58a806'}} />
                 </View>
 
-                <TouchableOpacity style={styles.google} onPress={()=>this.change_page()}>
-                    <Text style={styles.compte_social}>Commander maintenant</Text>
+                <TouchableOpacity style={styles.google} onPress={()=>change_page()}>
+                    <Text style={styles.compte_social}>Valider</Text>
                 </TouchableOpacity>
             </View>
 
         </View>
-    );}
+    );
 }
 
 const styles = StyleSheet.create({

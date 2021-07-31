@@ -3,10 +3,15 @@ import { StyleSheet, FlatList, View, TouchableOpacity, SafeAreaView } from 'reac
 import firebase from 'firebase'
 
 import ProduitCat from './composants/ProduitCat'
+import RoundCat from './composants/RoundCat';
 
 const ProduitList = (props) => {
 
-    const [donnees, setDonnees] = useState(0);
+    const [donnees, setDonnees] = useState([]);
+    const [donnees2, setDonnees2] = useState([]);
+    const [couleurBack, setCouleurBack] = useState(['#f3f3f1', '#f3f3f1', '#f3f3f1', '#f3f3f1'])
+    const [couleurText, setCouleurText] = useState(['#248e44', '#248e44', '#248e44', '#248e44'])
+    const id2 = props.route.params.idCat
 
     useEffect(() => {
         var firebaseConfig = {
@@ -36,14 +41,43 @@ const ProduitList = (props) => {
             setDonnees(dnees)
         })
 
+        setTimeout(()=>{
+            firebase.database().ref('categorie').on('value', (data)=>{
+                setDonnees2(Object.values(data.toJSON()))
+            })
+        }, 1000)
+
+        let cb = [...couleurBack]
+        cb[id2-1] = '#248e44'
+        setCouleurBack(cb)
+
+        let ct = [...couleurText]
+        ct[id2-1] = '#fff'
+        setCouleurText(ct)
+
     }, [])
 
     const detailProduit = (prod, id)=>{
         props.navigation.push('DetailProduit', {produit: prod, id: id})
     }
 
+    const detailProduit2 = (id)=>{
+        props.navigation.push('ProduitList', {idCat: id})
+    }
+
     return (
         <SafeAreaView style={_get_style().container}>
+            <View style={_get_style().cat}>
+                {donnees2.map((data) =>
+                    <TouchableOpacity onPress={()=>detailProduit2(donnees2.indexOf(data)+1)}>
+                        <RoundCat
+                            key={donnees2.indexOf(data).toString()} 
+                            datas = {data}
+                            couleurT={couleurText[donnees2.indexOf(data).toString()]}
+                            couleurB={couleurBack[donnees2.indexOf(data).toString()]}
+                        />
+                    </TouchableOpacity>)}
+            </View>
             <FlatList
                 data = {donnees}
                 keyExtractor={item => donnees.indexOf(item).toString()}
@@ -105,6 +139,12 @@ function _get_style(){
                 padding: 2,
                 marginLeft: 1,
                 marginRight: 8,
+            },
+            cat:{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginBottom: 8,
             },
         })
     )
