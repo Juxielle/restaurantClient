@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { StyleSheet, Text, TextInput, Image, Picker, View, ScrollView, TouchableOpacity} from 'react-native';
+import { StyleSheet, Text, TextInput, Dimensions, View, ScrollView, TouchableOpacity} from 'react-native';
 import firebase from 'firebase'
 
 const Connexion = (props)=>{
@@ -64,11 +64,9 @@ const Connexion = (props)=>{
                 />
             </View>
 
-            <View style={styles.container_btn}>
-                <TouchableOpacity style={styles.btn_success} onPress={()=>enregistrer()}>
-                    <Text style={styles.compte_social}>Valider</Text>
-                </TouchableOpacity>
-            </View>
+            <TouchableOpacity style={styles.btn_success} onPress={()=>enregistrer()}>
+                <Text style={styles.compte_social}>Valider</Text>
+            </TouchableOpacity>
 
         </ScrollView>
     );
@@ -116,14 +114,14 @@ const styles = StyleSheet.create({
         padding: 2,
     },
     btn_success: {
-        flex: 1,
-        height: 30,
-        borderRadius: 4,
-        fontSize: 14,
+        width: Dimensions.get("window").width,
+        height: 40,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#248e44',
         padding: 4,
+        position: 'fixed',
+        bottom: 1,
     },
     compte_social: {
         fontSize: 16,

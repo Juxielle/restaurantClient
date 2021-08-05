@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
         width: 150, 
         height: 50,
         borderRadius: 4,
-    }
+    },
 })
 
 export default RunPage;

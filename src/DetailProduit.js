@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import { StyleSheet, Modal, Image, TouchableOpacity, View } from 'react-native';
+import firebase from 'firebase'
 
 import Texte from './composants/Texte'
 import Localisation from './composants/Localisation';
@@ -9,16 +10,62 @@ const DetailProduit = (props) => {
     const [qte, setQte] = useState(1);
     const [quartier, setQuartier] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
+    const [donnees, setDonnees] = useState([]);
     const produit = props.route.params.produit;
     const id = props.route.params.id;
 
     useEffect(() => {
-        setQte(1);
+        var firebaseConfig = {
+            apiKey: "AIzaSyBv-sO25zuNtfRUgSDVaRLmZXAayi4vWMg",
+            authDomain: "restaurant-5e5c6.firebaseapp.com",
+            databaseURL: "https://restaurant-5e5c6-default-rtdb.firebaseio.com",
+            projectId: "restaurant-5e5c6",
+            storageBucket: "restaurant-5e5c6.appspot.com",
+            messagingSenderId: "104661562958",
+            appId: "1:104661562958:web:e3150aae2d4028d11b751f"
+        };
+      
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+         }else {
+            firebase.app(); // if already initialized, use that one
+         }
     }, [])
 
-    const _displayMenu = ()=>{
-        props.navigation.push('Map')
-        //setModalVisible(true)
+    const getProduit = (index)=>{
+        const prod = Object.values(donnees[index].produits)
+        let dn = []
+        for(let i=0; i<=prod.length-1; i++){
+            dn = [...dn, ['id'+prod[i].id, prod[i]]]
+        }
+        dn = [...dn, ['id'+produit.id, {id: produit.id, qte: qte}]]
+        return Object.fromEntries(dn)
+    }
+
+    const ajout_panier = ()=>{
+        let index = 0
+        firebase.database().ref('commandes').on('value', (data)=>{
+            if(data.toJSON() != null && data.toJSON() != undefined){
+                let dn = Object.values(data.toJSON());
+                for(let i=0; i<=dn.length-1; i++){
+                    if(index == dn[i].id){
+                        index ++;
+                    }else{ break; }
+                }
+                setDonnees(dn);
+                firebase.database().ref('commandes/id'+index).set({
+                    id: index,
+                    duree: 30,
+                    etat: 0, //Pas encore livrée
+                    confirmer: 0, //Pas encore confirmée
+                    frais: 0,
+                    idClient: 1, //A connaître avec l'etat global
+                    idVendeur: 1, //Pas encore connu
+                    produits: Object.fromEntries([['id'+produit.id, {id: produit.id, qte: qte}]])
+                }).then(()=>{props.navigation.navigate('Home')})
+            }
+        })
+        
     }
 
     const handleDialog = (nom)=>{
@@ -71,8 +118,8 @@ const DetailProduit = (props) => {
                     </TouchableOpacity>
                 </View>
                 
-                <TouchableOpacity style={_get_style().btn2} onPress={()=>_displayMenu()}>
-                        <Texte propriete={['Commandez', 15, 'normal', 'normal', 'serif', 'white']}/>
+                <TouchableOpacity style={_get_style().btn2} onPress={()=>ajout_panier()}>
+                        <Texte propriete={['Ajouter au panier', 15, 'normal', 'normal', 'serif', 'white']}/>
                 </TouchableOpacity>
             </View>
 
@@ -94,7 +141,6 @@ function _get_style(){
             },
             img: {
                 height: 180,
-                borderRadius: 4,
             },
             container_detail: {
                 flex: 10,

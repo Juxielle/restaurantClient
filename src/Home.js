@@ -27,11 +27,14 @@ const Home = (props) => {
          }
          
         firebase.database().ref('categorie').on('value', (data)=>{
-            setDonnees(Object.values(data.toJSON()))
+            if(data.toJSON() != null && data.toJSON() != undefined){
+                setDonnees(Object.values(data.toJSON()))
+            }
         })
     }, [])
 
     const detailProduit = (id)=>{
+        console.log(donnees)
         props.navigation.push('ProduitList', {idCat: id})
     }
 
