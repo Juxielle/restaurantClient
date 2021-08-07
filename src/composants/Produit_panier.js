@@ -15,13 +15,13 @@ const Produit_panier =(props)=> {
                 <Image style={styles.img} source={{uri: prop.url}} />
             </View>
             <View style={styles.texte}>
-                <Texte propriete={[prop.libelle, 14, 'bold', 'italic', 'sans serif', '#248e44']}/>
-                <Texte propriete={[prop.prix+' F CFA', 12, 'bold', 'italic', 'sans serif', '#0d4b85']}/>
-                <Texte propriete={['Nombre: '+nombre, 12, 'bold', 'italic', 'sans serif', '#c60000']}/>
+                <Texte propriete={[prop.libelle, 14, 'bold', 'italic', 'serif', '#248e44']}/>
+                <Texte propriete={[prop.prix+' F CFA', 12, 'bold', 'italic', 'serif', '#0d4b85']}/>
+                <Texte propriete={['Nombre: '+nombre, 12, 'bold', 'italic', 'serif', '#c60000']}/>
             </View>
 
             <View style={styles.content_btn}>
-                <TouchableOpacity onPress={()=>editer()}>
+                <TouchableOpacity >
                     <FontAwesome style={styles.add} name='plus-square'/>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={()=>props.handleDialogPower(props.id)}>

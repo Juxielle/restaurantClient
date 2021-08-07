@@ -52,7 +52,7 @@ const MainStackNavigator = (props) => {
         <Stack.Screen
         name="Home" 
         component={Home}
-        options={ styleNav('Accueil', props) }
+        options={(props)=> styleNav('Accueil', props) }
         />
         <Stack.Screen
         name="ProduitList" 
@@ -74,7 +74,7 @@ export {
 };
 
 const styleNav = (title, props) => {
-  if(title == 'Accueil' || title == 'Connexion' || title == 'Inscription'){
+  if(title == 'Accueil'){
     return (
       {
       title: title,
@@ -83,6 +83,22 @@ const styleNav = (title, props) => {
                           <FontAwesome style={styles.camera3} name='shopping-cart'/>
                           <Text style={styles.rounded}>8</Text>
                         </TouchableOpacity>),
+      headerStyle: {
+          height: 50,
+          backgroundColor: '#f3f3f1',
+          },
+          headerTintColor: '#248e44',
+          headerTitleStyle: {
+          fontSize: 20,
+          textAlign: 'center',
+          },
+      }
+    )
+  }else if(title == 'Connexion' || title == 'Inscription'){
+    return (
+      {
+      title: title,
+      headerLeft: null,
       headerStyle: {
           height: 50,
           backgroundColor: '#f3f3f1',

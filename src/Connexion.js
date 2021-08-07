@@ -120,8 +120,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#248e44',
         padding: 4,
-        position: 'fixed',
-        bottom: 1,
     },
     compte_social: {
         fontSize: 16,

@@ -6,7 +6,7 @@ const Dialogue = (props) => {
     const message = props.message
 
     return (
-        <View style={styles.container}>
+        <View style={styles.container1}>
             <View style={styles.box}>
                 <Text style={styles.msg}>Voulez-vous supprimer cet élément ?</Text>
                 <View style={styles.cont_btn}>
@@ -25,7 +25,7 @@ const Dialogue = (props) => {
 export default Dialogue
 
 const styles = StyleSheet.create({
-    container: {
+    container1: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',

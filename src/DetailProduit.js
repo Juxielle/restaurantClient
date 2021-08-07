@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { StyleSheet, Modal, Image, TouchableOpacity, View } from 'react-native';
 import firebase from 'firebase'
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 import Texte from './composants/Texte'
 import Localisation from './composants/Localisation';
@@ -90,6 +91,9 @@ const DetailProduit = (props) => {
                     style={_get_style().img}
                     source={{uri: produit.url}}
                 />
+                <TouchableOpacity style={_get_style().contentfleche} onPress={()=>props.navigation.goBack()}>
+                    <FontAwesome style={_get_style().fleche} name='arrow-left' />
+                </TouchableOpacity>
             </View>
 
             <View style={_get_style().container_detail}>
@@ -140,7 +144,7 @@ function _get_style(){
                 borderRadius: 4,
             },
             img: {
-                height: 180,
+                height: 200,
             },
             container_detail: {
                 flex: 10,
@@ -212,6 +216,15 @@ function _get_style(){
                 justifyContent: 'center',
                 alignItems: 'center',
                 marginLeft: 8,
+            },
+            fleche: {
+                fontSize: 30,
+                color: '#fff',
+            },
+            contentfleche: {
+                position: 'absolute',
+                left: 10,
+                top: 40,
             },
         })
     )

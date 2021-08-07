@@ -34,7 +34,6 @@ const Home = (props) => {
     }, [])
 
     const detailProduit = (id)=>{
-        console.log(donnees)
         props.navigation.push('ProduitList', {idCat: id})
     }
 

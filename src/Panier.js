@@ -35,7 +35,6 @@ const Panier =(props)=> {
                 setDonnees(Object.values(data.toJSON()))
             }
         })
-
     }, [])
 
     const getTotal = (item)=>{
@@ -89,17 +88,16 @@ const Panier =(props)=> {
                     setModalVisible(!modalVisible);
                 }}
             >
-                <Dialogue id={id} handleDialog={handleDialog}/>
             </Modal>
-                <FlatList
-                    data = {donnees}
-                    keyExtractor={item => donnees.indexOf(item).toString()}
-                    renderItem={({item}) => (
-                        <TouchableOpacity style={styles.produit} onPress={()=>produit(item)}>
-                            <Commande commande={item} total={getTotal(item)} handleAjout={handleAjout} handleDialogPower={handleDialogPower}/>
-                        </TouchableOpacity>
-                    )}
-                />
+            <FlatList
+                data = {donnees}
+                keyExtractor={item => donnees.indexOf(item).toString()}
+                renderItem={({item}) => (
+                    <TouchableOpacity style={styles.produit} onPress={()=>produit(item)}>
+                        <Commande commande={item} total={getTotal(item)} handleAjout={handleAjout} handleDialogPower={handleDialogPower}/>
+                    </TouchableOpacity>
+                )}
+            />
         </SafeAreaView>
     );
 

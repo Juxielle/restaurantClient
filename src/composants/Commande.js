@@ -12,15 +12,15 @@ const Commande =(props)=> {
     return (
         <View style={styles.container}>
             <View style={styles.texte}>
-                <Texte propriete={['Identifiant: IDMAX00'+com.id, 14, 'bold', 'italic', 'sans serif', '#0d4b85']}/>
-                <Texte propriete={['Prix de livraison: '+com.frais+' Frs', 12, 'bold', 'italic', 'sans serif', '#248e44']}/>
-                <Texte propriete={['Nombre de produits: '+prod.length, 12, 'bold', 'italic', 'sans serif', '#248e44']}/>
-                <Texte propriete={['Minutes: '+com.duree+'mins', 12, 'bold', 'italic', 'sans serif', '#248e44']}/>
-                <Texte propriete={['Total à payer: '+props.total+' Frs', 14, 'bold', 'italic', 'sans serif', '#c60000']}/>
+                <Texte propriete={['Identifiant: IDMAX00'+com.id, 14, 'bold', 'italic', 'serif', '#0d4b85']}/>
+                <Texte propriete={['Prix de livraison: '+com.frais+' Frs', 12, 'bold', 'italic', 'serif', '#248e44']}/>
+                <Texte propriete={['Nombre de produits: '+prod.length, 12, 'bold', 'italic', 'serif', '#248e44']}/>
+                <Texte propriete={['Minutes: '+com.duree+'mins', 12, 'bold', 'italic', 'serif', '#248e44']}/>
+                <Texte propriete={['Total à payer: '+props.total+' Frs', 14, 'bold', 'italic', 'serif', '#c60000']}/>
             </View>
 
             <View style={styles.content_btn}>
-                <TouchableOpacity onPress={()=>editer()}>
+                <TouchableOpacity >
                     <FontAwesome style={styles.map} name='map-marker'/>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={()=>props.handleAjout(true)}>
