@@ -1,40 +1,26 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useEffect, useState} from 'react';
-import { StyleSheet, Text, TouchableOpacity, FlatList, SafeAreaView, View } from 'react-native';
-import firebase from 'firebase';
+import { StyleSheet, Alert, TouchableOpacity, FlatList, SafeAreaView, View } from 'react-native';
 
 import Produit_home from './composants/Produit_home'
 import RoundCat from './composants/RoundCat';
+import HOST from './host'
 
 const Home = (props) => {
     const [donnees, setDonnees] = useState([]);
 
     useEffect(() => {
-        var firebaseConfig = {
-            apiKey: "AIzaSyBv-sO25zuNtfRUgSDVaRLmZXAayi4vWMg",
-            authDomain: "restaurant-5e5c6.firebaseapp.com",
-            databaseURL: "https://restaurant-5e5c6-default-rtdb.firebaseio.com",
-            projectId: "restaurant-5e5c6",
-            storageBucket: "restaurant-5e5c6.appspot.com",
-            messagingSenderId: "104661562958",
-            appId: "1:104661562958:web:e3150aae2d4028d11b751f"
-        };
-      
-        if (!firebase.apps.length) {
-            firebase.initializeApp(firebaseConfig);
-         }else {
-            firebase.app(); // if already initialized, use that one
-         }
-         
-        firebase.database().ref('categorie').on('value', (data)=>{
-            if(data.toJSON() != null && data.toJSON() != undefined){
-                setDonnees(Object.values(data.toJSON()))
-            }
-        })
+        fetch(HOST+'dataList.php')
+              .then((response) => response.json())
+              .then((responseJson) => {
+                  setDonnees(responseJson);
+              }).catch((error) => {
+                  console.log(error);
+              })
     }, [])
 
     const detailProduit = (id)=>{
-        props.navigation.push('ProduitList', {idCat: id})
+        props.navigation.push('ProduitList', {donnees: donnees, idCat: id, libelle: donnees[id-1].libelle})
     }
 
     return (
@@ -76,7 +62,6 @@ const styles = StyleSheet.create({
     },
     produit2: {
         flex: 1,
-        height: 200,
         marginRight: 2,
     },
     btn: {

@@ -7,7 +7,7 @@ const RoundCat = (props)=> {
         <View style={[{backgroundColor: props.couleurB}, styles.container]}>
             <Image
                 style={styles.img}
-                source = {{uri: props.datas.url}}
+                source = {{uri: 'http://192.168.1.64/restaurant_max/img_cat/'+props.datas.image+'.jpg'}}
             />
             <Text 
                 style={[{color: props.couleurT}, styles.texte]}

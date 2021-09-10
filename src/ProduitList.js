@@ -1,51 +1,36 @@
 import React, {useEffect, useState} from 'react';
-import { StyleSheet, FlatList, View, TouchableOpacity, SafeAreaView } from 'react-native';
-import firebase from 'firebase'
+import { StyleSheet, FlatList, View, TouchableOpacity, SafeAreaView, Alert } from 'react-native';
 
 import ProduitCat from './composants/ProduitCat'
 import RoundCat from './composants/RoundCat';
+import Texte from './composants/Texte'
+import HOST from './host'
 
 const ProduitList = (props) => {
 
     const [donnees, setDonnees] = useState([]);
-    const [donnees2, setDonnees2] = useState([]);
+    let donnees2 = props.route.params.donnees
     const [couleurBack, setCouleurBack] = useState(['#f3f3f1', '#f3f3f1', '#f3f3f1', '#f3f3f1'])
     const [couleurText, setCouleurText] = useState(['#248e44', '#248e44', '#248e44', '#248e44'])
     const id2 = props.route.params.idCat
+    const libelle = props.route.params.libelle
 
     useEffect(() => {
-        var firebaseConfig = {
-            apiKey: "AIzaSyBv-sO25zuNtfRUgSDVaRLmZXAayi4vWMg",
-            authDomain: "restaurant-5e5c6.firebaseapp.com",
-            databaseURL: "https://restaurant-5e5c6-default-rtdb.firebaseio.com",
-            projectId: "restaurant-5e5c6",
-            storageBucket: "restaurant-5e5c6.appspot.com",
-            messagingSenderId: "104661562958",
-            appId: "1:104661562958:web:e3150aae2d4028d11b751f"
-        };
-
-        if (!firebase.apps.length) {
-            firebase.initializeApp(firebaseConfig);
-         }else {
-            firebase.app(); // if already initialized, use that one
-         }
-
-        firebase.database().ref('produis').on('value', (data)=>{
-            var dta = [], dnees = [];
-            dta = Object.values(data.toJSON())
-            dta.forEach((element) => {
-                if(element.idCat==props.route.params.idCat){
-                    dnees.push(element);
-                }
+        fetch(HOST+'listeProduits.php', {
+            method: 'POST',
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                idCat: id2,
             })
-            setDonnees(dnees)
-        })
-
-        setTimeout(()=>{
-            firebase.database().ref('categorie').on('value', (data)=>{
-                setDonnees2(Object.values(data.toJSON()))
-            })
-        }, 1000)
+        }).then((response) => response.json())
+              .then((responseJson) => {
+                  setDonnees(responseJson);
+              }).catch((error) => {
+                  Alert.alert(error);
+              })
 
         let cb = [...couleurBack]
         cb[id2-1] = '#248e44'
@@ -62,7 +47,7 @@ const ProduitList = (props) => {
     }
 
     const detailProduit2 = (id)=>{
-        props.navigation.push('ProduitList', {idCat: id})
+        props.navigation.push('ProduitList', {donnees: donnees2, idCat: id, libelle: donnees2[id-1].libelle})
     }
 
     return (
@@ -77,6 +62,10 @@ const ProduitList = (props) => {
                             couleurB={couleurBack[donnees2.indexOf(data).toString()]}
                         />
                     </TouchableOpacity>)}
+            </View>
+
+            <View style={_get_style().texte}>
+                <Texte propriete={[libelle, 22, 'bold', 'normal', 'sans-serif', 'black']}/>
             </View>
             <FlatList
                 data = {donnees}
@@ -103,8 +92,14 @@ function _get_style(){
                 paddingTop: 4,
             },
             container_prod: {
-                flexDirection: 'row',
-                marginBottom: 10,
+                height: 140,
+                justifyContent: 'center',
+                borderTopWidth: 1,
+                borderTopColor: 'grey',
+                //borderBottomWidth: 1,
+                //borderBottomColor: 'grey',
+                paddingTop: 20,
+                //marginBottom: 30,
             },
             produit1: {
                 flex: 1,
@@ -113,8 +108,8 @@ function _get_style(){
             },
             produit2: {
                 flex: 1,
-                height: 80,
                 marginRight: 2,
+                justifyContent: 'center',
             },
             btn: {
                 flex: 1,
@@ -145,6 +140,11 @@ function _get_style(){
                 alignItems: 'center',
                 justifyContent: 'center',
                 marginBottom: 8,
+            },
+            texte: {
+                justifyContent: 'center',
+                marginBottom: 30,
+                marginLeft: 8,
             },
         })
     )

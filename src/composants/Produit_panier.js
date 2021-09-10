@@ -7,17 +7,19 @@ import Texte from './Texte'
 const Produit_panier =(props)=> {
 
     const prop = props.produit;
-    const nombre = props.nombre
 
     return (
         <View style={styles.container}>
             <View style={styles.img}>
-                <Image style={styles.img} source={{uri: prop.url}} />
+                <Image
+                style={styles.img}
+                source={{uri: 'http://192.168.1.64/restaurant_max/img_prod/'+prop.image+'.jpg'}} 
+                />
             </View>
             <View style={styles.texte}>
-                <Texte propriete={[prop.libelle, 14, 'bold', 'italic', 'serif', '#248e44']}/>
-                <Texte propriete={[prop.prix+' F CFA', 12, 'bold', 'italic', 'serif', '#0d4b85']}/>
-                <Texte propriete={['Nombre: '+nombre, 12, 'bold', 'italic', 'serif', '#c60000']}/>
+                <Texte propriete={[prop.libelle, 16, 'bold', 'italic', 'sans-serif', '#248e44']}/>
+                <Texte propriete={[prop.prix+' F CFA', 14, 'bold', 'italic', 'sans-serif', '#0d4b85']}/>
+                <Texte propriete={['Nombre: 4', 14, 'bold', 'italic', 'sans-serif', '#c60000']}/>
             </View>
 
             <View style={styles.content_btn}>

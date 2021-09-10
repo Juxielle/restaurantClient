@@ -1,62 +1,181 @@
 
 
-const dataMap = [
+//mapStyle.js
+const mapStyle = [
     {
-        name: 'Awendje',
-        latitude: 0.39238348747861257,
-		longitude: 9.452304938873283,
-		latitudeDelta: 0.0922,
-		longitudeDelta: 0.0421,
+      featureType: 'water',
+      elementType: 'geometry',
+      stylers: [
+        {
+          color: '#e9e9e9',
+        },
+        {
+          lightness: 17,
+        },
+      ],
     },
     {
-        name: 'Agondje',
-        latitude: 0.3980481781504167,
-		longitude: 9.469814399322502,
-		latitudeDelta: 0.0922,
-		longitudeDelta: 0.0421,
+      featureType: 'landscape',
+      elementType: 'geometry',
+      stylers: [
+        {
+          color: '#f5f5f5',
+        },
+        {
+          lightness: 20,
+        },
+      ],
     },
     {
-        name: 'Owendo',
-        latitude: 0.3779642576807717,
-		longitude: 9.466981986602775,
-		latitudeDelta: 0.0922,
-		longitudeDelta: 0.0421,
+      featureType: 'road.highway',
+      elementType: 'geometry.fill',
+      stylers: [
+        {
+          color: '#ffffff',
+        },
+        {
+          lightness: 17,
+        },
+      ],
     },
     {
-        name: 'Charbonnage',
-        latitude: 0.36886639793353093,
-		longitude: 9.469471076568595,
-		latitudeDelta: 0.0922,
-		longitudeDelta: 0.0421,
+      featureType: 'road.highway',
+      elementType: 'geometry.stroke',
+      stylers: [
+        {
+          color: '#ffffff',
+        },
+        {
+          lightness: 29,
+        },
+        {
+          weight: 0.2,
+        },
+      ],
     },
     {
-        name: 'iai',
-        latitude: 0.4018246364400974,
-		longitude: 9.453764060577384,
-		latitudeDelta: 0.0922,
-		longitudeDelta: 0.0421,
+      featureType: 'road.arterial',
+      elementType: 'geometry',
+      stylers: [
+        {
+          color: '#ffffff',
+        },
+        {
+          lightness: 18,
+        },
+      ],
     },
     {
-        name: 'Feu rouge',
-        latitude: 0.38603216307605676,
-		longitude: 9.448013404449455,
-		latitudeDelta: 0.0922,
-		longitudeDelta: 0.0421,
+      featureType: 'road.local',
+      elementType: 'geometry',
+      stylers: [
+        {
+          color: '#ffffff',
+        },
+        {
+          lightness: 16,
+        },
+      ],
     },
     {
-        name: 'Petit paris',
-        latitude: 0.3789942034710302,
-		longitude: 9.454450706085197,
-		latitudeDelta: 0.0922,
-		longitudeDelta: 0.0421,
+      featureType: 'poi',
+      elementType: 'geometry',
+      stylers: [
+        {
+          color: '#f5f5f5',
+        },
+        {
+          lightness: 21,
+        },
+      ],
     },
     {
-        name: 'Petit Dubaî',
-        latitude: 0.37092629152920936,
-		longitude: 9.458484748443595,
-		latitudeDelta: 0.0922,
-		longitudeDelta: 0.0421,
+      featureType: 'poi.park',
+      elementType: 'geometry',
+      stylers: [
+        {
+          color: '#dedede',
+        },
+        {
+          lightness: 21,
+        },
+      ],
     },
-]
+    {
+      elementType: 'labels.text.stroke',
+      stylers: [
+        {
+          visibility: 'on',
+        },
+        {
+          color: '#ffffff',
+        },
+        {
+          lightness: 16,
+        },
+      ],
+    },
+    {
+      elementType: 'labels.text.fill',
+      stylers: [
+        {
+          saturation: 36,
+        },
+        {
+          color: '#333333',
+        },
+        {
+          lightness: 40,
+        },
+      ],
+    },
+    {
+      elementType: 'labels.icon',
+      stylers: [
+        {
+          visibility: 'off',
+        },
+      ],
+    },
+    {
+      featureType: 'transit',
+      elementType: 'geometry',
+      stylers: [
+        {
+          color: '#f2f2f2',
+        },
+        {
+          lightness: 19,
+        },
+      ],
+    },
+    {
+      featureType: 'administrative',
+      elementType: 'geometry.fill',
+      stylers: [
+        {
+          color: '#fefefe',
+        },
+        {
+          lightness: 20,
+        },
+      ],
+    },
+    {
+      featureType: 'administrative',
+      elementType: 'geometry.stroke',
+      stylers: [
+        {
+          color: '#fefefe',
+        },
+        {
+          lightness: 17,
+        },
+        {
+          weight: 1.2,
+        },
+      ],
+    },
+  ];
 
-export default {dataMap}
+export default {mapStyle}

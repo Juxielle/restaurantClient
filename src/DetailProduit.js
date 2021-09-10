@@ -1,10 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import { StyleSheet, Modal, Image, TouchableOpacity, View } from 'react-native';
-import firebase from 'firebase'
+import { StyleSheet, Alert, Image, TouchableOpacity, View } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 import Texte from './composants/Texte'
-import Localisation from './composants/Localisation';
+import HOST from './host'
 
 const DetailProduit = (props) => {
 
@@ -16,21 +15,7 @@ const DetailProduit = (props) => {
     const id = props.route.params.id;
 
     useEffect(() => {
-        var firebaseConfig = {
-            apiKey: "AIzaSyBv-sO25zuNtfRUgSDVaRLmZXAayi4vWMg",
-            authDomain: "restaurant-5e5c6.firebaseapp.com",
-            databaseURL: "https://restaurant-5e5c6-default-rtdb.firebaseio.com",
-            projectId: "restaurant-5e5c6",
-            storageBucket: "restaurant-5e5c6.appspot.com",
-            messagingSenderId: "104661562958",
-            appId: "1:104661562958:web:e3150aae2d4028d11b751f"
-        };
-      
-        if (!firebase.apps.length) {
-            firebase.initializeApp(firebaseConfig);
-         }else {
-            firebase.app(); // if already initialized, use that one
-         }
+
     }, [])
 
     const getProduit = (index)=>{
@@ -44,29 +29,39 @@ const DetailProduit = (props) => {
     }
 
     const ajout_panier = ()=>{
-        let index = 0
-        firebase.database().ref('commandes').on('value', (data)=>{
-            if(data.toJSON() != null && data.toJSON() != undefined){
-                let dn = Object.values(data.toJSON());
-                for(let i=0; i<=dn.length-1; i++){
-                    if(index == dn[i].id){
-                        index ++;
-                    }else{ break; }
-                }
-                setDonnees(dn);
-                firebase.database().ref('commandes/id'+index).set({
-                    id: index,
-                    duree: 30,
-                    etat: 0, //Pas encore livrée
-                    confirmer: 0, //Pas encore confirmée
-                    frais: 0,
-                    idClient: 1, //A connaître avec l'etat global
-                    idVendeur: 1, //Pas encore connu
-                    produits: Object.fromEntries([['id'+produit.id, {id: produit.id, qte: qte}]])
-                }).then(()=>{props.navigation.navigate('Home')})
-            }
-        })
-        
+        Alert.alert(
+            "Information",
+            "Veuillez confirmer votre commande !!",
+            [
+              {
+                text: "Cancel",
+                onPress: () => console.log("Cancel Pressed"),
+                style: "cancel"
+              },
+              { text: "OK", onPress: () => {
+                fetch(HOST+'addCommande.php', {
+                    method: 'POST',
+                    headers: {
+                        "Accept": "application/json",
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        idProduit: produit.id,
+                        nombre: qte,
+                        idClient: 2,
+                        idLivraison: 1,
+                        etat: 0,
+                    })
+                }).then((response) => response.json())
+                  .then((responseJson) => {
+                      Alert.alert(responseJson);
+                  }).catch((error) => {
+                      Alert.alert(error);
+                })
+                Alert.alert('Enregistrement effectué avec succès !!')
+              } }
+            ]
+          );
     }
 
     const handleDialog = (nom)=>{
@@ -89,7 +84,7 @@ const DetailProduit = (props) => {
             <View style={_get_style().container_img}>
                 <Image
                     style={_get_style().img}
-                    source={{uri: produit.url}}
+                    source={{uri: 'http://192.168.1.64/restaurant_max/img_prod/'+produit.image+'.jpg'}}
                 />
                 <TouchableOpacity style={_get_style().contentfleche} onPress={()=>props.navigation.goBack()}>
                     <FontAwesome style={_get_style().fleche} name='arrow-left' />

@@ -19,12 +19,20 @@
     "ios": {
       "bundleIdentifier": "com.harold.restaurantSeller",
       "buildNumber": "1.0.0",
-      "supportsTablet": true
+      "supportsTablet": true,
+      "config": {
+        "googleMapsApiKey": "AIzaSyB_pt5iF9KOV3012rqrmY1FeAcEDHZpHyY"
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
+      },
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyB_pt5iF9KOV3012rqrmY1FeAcEDHZpHyY"
+        }
       },
       "package": "com.harold.restaurantClient",
       "versionCode": 1

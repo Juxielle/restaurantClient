@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
 import { Camera } from 'expo-camera';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 export default function CameraPhoto(props) {
   const [hasPermission, setHasPermission] = useState(null);
@@ -23,15 +24,6 @@ export default function CameraPhoto(props) {
     );
   }
 
-  const  dataURLtoFile = (dataurl, filename) => {
-    var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
-        bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
-    while(n--){
-        u8arr[n] = bstr.charCodeAt(n);
-    }
-    return new File([u8arr], filename, {type:mime});
-  }
-
   const snap = async () => {
     //takePhoto()
     let source = '';
@@ -40,12 +32,9 @@ export default function CameraPhoto(props) {
       let photo = await cam.current.takePictureAsync(options);
 
       source = photo.uri;
-      var file = dataURLtoFile(source, 'a.png');
-      console.log('Picture source: ', source);
       setImage(source)
+      props.handleTakeImage(source)
     }
-
-    props.navigation.goBack({image: source});
   };
 
   if (hasPermission === null) {
@@ -65,11 +54,8 @@ export default function CameraPhoto(props) {
           <TouchableOpacity
             style={styles.button}
             onPress={() => snap()}>
-            <View style={styles.container_img}  onPress={()=>takeImage(true)}>
-                <Image
-                    style={styles.camera2}
-                    source={{uri:'https://firebasestorage.googleapis.com/v0/b/restaurant-5e5c6.appspot.com/o/icons%2Fcamera.png?alt=media&token=238ca6e2-3496-46ce-b66e-85ed8816a8d2'}}
-                />
+            <View style={styles.container_img}>
+                <FontAwesome style={styles.camera3} name='camera'/>
                 <Text style={styles.camera_text}>Prende une photo</Text>
             </View>
           </TouchableOpacity>
@@ -111,6 +97,11 @@ const styles = StyleSheet.create({
       width: 30,
       height: 30,
       borderRadius: 4,
+  },
+  camera3: {
+    fontSize: 30,
+    color: '#fff',
+    borderRadius: 4,
   },
   camera_text: {
       fontSize: 10,

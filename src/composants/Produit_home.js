@@ -1,9 +1,10 @@
 import React from 'react';
-import { StyleSheet, YellowBox, Image, Dimensions, View } from 'react-native';
+import { StyleSheet, Image, View } from 'react-native';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 import Texte from './Texte'
 
-YellowBox.ignoreWarnings(['Setting a timer']);
+
 
 export default class Produit_home extends React.Component {
 
@@ -19,17 +20,33 @@ export default class Produit_home extends React.Component {
             <View style={this._get_style().container}>
                 
                 <View style={this._get_style().img}>
-                    <Image style={this._get_style().img2} source={{uri: prop.url}} />
+                    <Image
+                    style={this._get_style().img2}
+                    source={{uri: 'http://192.168.1.64/restaurant_max/img_cat/'+prop.image+'.jpg'}}
+                    />
+                </View>
+
+                <View style={this._get_style().quantite}>
+                    <Texte propriete={['30-35', 18, 'bold', 'normal', 'sans-serif', 'black']}/>
                 </View>
 
                 <View style={this._get_style().texte}>
-                    <Texte propriete={[prop.libelle, 12, 'bold', 'normal', 'serif', 'black']}/>
+                    <Texte propriete={[prop.libelle, 22, 'bold', 'normal', 'sans-serif', 'black']}/>
                 </View>
 
                 <View style={this._get_style().btn_price}>
+                    <FontAwesome style={this._get_style().camera3} name='star-o'/>
                     <View style={this._get_style().price}>
-                        <Texte propriete={[prop.prix+' F CFA', 14, 'bold', 'italic', 'serif', '#248e44']}/>
+                        <Texte propriete={['4.8', 20, 'normal', 'italic', 'sans-serif', 'black']}/>
                     </View>
+                    <FontAwesome style={this._get_style().camera3} name='shopping-basket'/>
+                    <View style={this._get_style().price}>
+                        <Texte propriete={[prop.prix+' f', 20, 'normal', 'italic', 'sans-serif', 'black']}/>
+                    </View>
+                </View>
+
+                <View style={this._get_style().texte}>
+                    <Texte propriete={['€€ - '+prop.libelle, 20, 'normal', 'normal', 'sans-serif-thin', 'black']}/>
                 </View>
 
             </View>
@@ -40,40 +57,46 @@ export default class Produit_home extends React.Component {
         return (
             StyleSheet.create({
                 img: {
-                    flex: 1,
-                    borderRadius: 4,
+                    margin: 20,
                 },
                 img2: {
-                    flex: 1,
-                    borderRadius: 4,
+                    height: 180,
+                    borderRadius: 8,
                 },
                 container: {
                     flex: 1,
-                    flexDirection: 'column',
-                    justifyContent: 'center',
-                    backgroundColor: '#f3f3f1',
-                    borderRadius: 4,
-                    padding: 1,
+                    //backgroundColor: '#f3f3f1',
                 },
                 texte: {
                     justifyContent: 'center',
                     marginLeft: 2,
+                    marginLeft: 20,
+                    marginBottom: 5,
                 },
                 btn_price: {
                     flexDirection: 'row',
                     alignItems: 'center',
-                    justifyContent: 'center',
+                    marginLeft: 20,
                 },
                 price: {
-                    flex: 1,
                     alignItems: 'flex-start',
                     marginLeft: 2,
                 },
-                btn: {
-                    flex: 1,
-                    alignItems: 'flex-end',
-                    margin: 2,
-                }
+                quantite: {
+                    height: 50,
+                    backgroundColor: '#fff',
+                    position: 'absolute',
+                    right: 25,
+                    top: 10,
+                    marginTop: 165,
+                    paddingHorizontal: 10,
+                    paddingTop: 5,
+                    borderRadius: 15,
+                },
+                camera3: {
+                    fontSize: 20,
+                    marginLeft: 15,
+                  },
             })
         )
     }

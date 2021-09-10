@@ -1,11 +1,29 @@
 import React, {useEffect, useState} from 'react';
-import { StyleSheet, Text, TextInput, Dimensions, View, ScrollView, TouchableOpacity} from 'react-native';
+import { StyleSheet, Text, TextInput, Alert, View, ScrollView, TouchableOpacity} from 'react-native';
 import firebase from 'firebase'
+import * as SMS from 'expo-sms';
+import * as SQLite from "expo-sqlite";
+
+function openDatabase() {
+    if (Platform.OS === "web") {
+      return {
+        transaction: () => {
+          return {
+            executeSql: () => {},
+          };
+        },
+      };
+    }
+  
+    const db = SQLite.openDatabase("db.db");
+    return db;
+}
+  
+const db = openDatabase();
 
 const Connexion = (props)=>{
 
     const [numero, setNumero] = useState();
-    const [password, setPassword] = useState();
 
     useEffect(() => {
         var firebaseConfig = {
@@ -23,24 +41,67 @@ const Connexion = (props)=>{
          }else {
             firebase.app(); // if already initialized, use that one
          }
+         
     }, [])
 
+    const genereCode = ()=>{
+        const codep1 = Math.floor(Math.random() * (999 - 100) + 100);
+        const codep2 = Math.floor(Math.random() * (999 - 100) + 100);
+        return codep1.toString() +' '+ codep2.toString();
+    }
+
+    const handleSend = async (num, code)=> {
+        const numbersArr = [num];
+        const isAvailable = await SMS.isAvailableAsync()
+        if (isAvailable) {
+          while (numbersArr.length > 0) {
+            const n = numbersArr.pop()
+            const result = await SMS.sendSMSAsync(n, 'Bienvenu sur MAXI\'IN APP\n\t Votre code est: '+code);
+            console.log('results', result)
+          }
+        } else {
+          // misfortune... there's no SMS available on this device
+        }
+    }
+
+    const showAlertInfo = (title, sms)=>{
+        Alert.alert(
+            title,
+            sms,
+            [
+                {
+                    text: 'COMPRIS',
+                    onPress: () => console.log(title)
+                }
+            ]
+        )
+    }
+
     const enregistrer = ()=>{
-        let id = 0;
-        firebase.database().ref('admin/id0').on('value', (data)=>{
-            var donnees = [];
+        firebase.database().ref('clients').on('value', (data)=>{
+            let donnees = [];
             if(data.toJSON() != undefined || data.toJSON() != null){
                 donnees = Object.values(data.toJSON())
-                if(donnees[3] == password || donnees[2] == numero){
-                    props.navigation.navigate('Home')
+                for(let i=0; i<=donnees.length-1; i++){
+                    if(numero == donnees[i].numero){
+                        db.transaction(
+                            (tx) => {
+                                tx.executeSql("insert into numeros (id, numero) values (0, ?)", [numero]);
+                                setTimeout(()=>{
+                                    props.navigation.navigate('Home');
+                                }, 2100)
+                            },
+                        ); break;
+                    }else if(i == donnees.length-1){
+                        showAlertInfo('Information', 'Numero non reconnu !!\nEnregistrez-vous si vous n\'avez pas de compte');
+                    }
                 }
             }
         })
     }
 
     return (
-        <ScrollView style={styles.container}>
-
+        <View style={styles.container}>
             <View style={styles.container_mail}>
                 <Text style={styles.libelle}>Numero de téléphone</Text>
                 <View style={styles.cont_num}>
@@ -54,21 +115,16 @@ const Connexion = (props)=>{
                 </View>
             </View>
 
-            <View style={styles.container_mail}>
-                <Text style={styles.libelle}>Mot de passe</Text>
-                <TextInput
-                    style={styles.search}
-                    onChangeText={setPassword}
-                    value={password}
-                    secureTextEntry={true}
-                />
+            <View style={styles.container_btn}>
+                <TouchableOpacity style={styles.btn_success} onPress={()=>enregistrer()}>
+                    <Text style={styles.compte_social}>Se connecter</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.btn_cancel} onPress={()=>props.navigation.navigate('Inscription')}>
+                    <Text style={styles.compte_social}>S'enregistrer</Text>
+                </TouchableOpacity>
             </View>
 
-            <TouchableOpacity style={styles.btn_success} onPress={()=>enregistrer()}>
-                <Text style={styles.compte_social}>Valider</Text>
-            </TouchableOpacity>
-
-        </ScrollView>
+        </View>
     );
 }
 
@@ -77,15 +133,12 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     container_mail: {
-        flex: 1,
-        marginBottom: 20,
-        marginLeft: 2,
+        flex: 8,
+        justifyContent: 'center',
         padding: 4,
     },
     container_btn: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'flex-start',
         flexDirection: 'row',
         padding: 2,
     },
@@ -113,12 +166,26 @@ const styles = StyleSheet.create({
         borderBottomColor: 'grey',
         padding: 2,
     },
-    btn_success: {
-        width: Dimensions.get("window").width,
+    btn_cancel: {
+        flex: 1,
         height: 40,
+        borderRadius: 4,
+        fontSize: 14,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#e57373',
+        marginLeft: 10,
+        padding: 4,
+    },
+    btn_success: {
+        flex: 1,
+        height: 40,
+        borderRadius: 4,
+        fontSize: 14,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#248e44',
+        marginRight: 10,
         padding: 4,
     },
     compte_social: {

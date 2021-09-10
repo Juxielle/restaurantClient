@@ -1,52 +1,99 @@
 import React, {useEffect, useState} from 'react';
-import { StyleSheet, Text, TextInput, Image, Picker, View, ScrollView, TouchableOpacity} from 'react-native';
-import firebase from 'firebase'
+import { StyleSheet, Alert, Text, TextInput, Image, View, ScrollView, TouchableOpacity} from 'react-native';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+
+import * as ImagePicker from 'expo-image-picker';
+import CameraPhoto from './composants/CameraPhoto';
 
 const Inscription = (props)=>{
 
     const [nom, setNom] = useState('');
     const [prenom, setPrenom] = useState('');
     const [numero, setNumero] = useState();
-    const [password, setPassword] = useState();
-    const [reapetPassword, setReapetPassword] = useState();
+    const [url, setUrl] = useState('');
+    const [modalVisible, setModalVisible] = useState(false);
 
     useEffect(() => {
-        var firebaseConfig = {
-            apiKey: "AIzaSyBv-sO25zuNtfRUgSDVaRLmZXAayi4vWMg",
-            authDomain: "restaurant-5e5c6.firebaseapp.com",
-            databaseURL: "https://restaurant-5e5c6-default-rtdb.firebaseio.com",
-            projectId: "restaurant-5e5c6",
-            storageBucket: "restaurant-5e5c6.appspot.com",
-            messagingSenderId: "104661562958",
-            appId: "1:104661562958:web:e3150aae2d4028d11b751f"
-        };
 
-        if (!firebase.apps.length) {
-            firebase.initializeApp(firebaseConfig);
-         }else {
-            firebase.app(); // if already initialized, use that one
-         }
     }, [])
 
+    const genereCode = ()=>{
+        const codep1 = Math.random() * (999 - 100) + 100;
+        const codep2 = Math.random() * (999 - 100) + 100;
+        return codep1.toString() +' '+ codep2.toString();
+    }
+
     const enregistrer = ()=>{
-        const id = 0
-        if(password == reapetPassword){
-            firebase.database().ref('admin/id'+id).set({
-                id: id,
-                nom: nom,
-                numero: numero,
-                prenom: prenom,
-                password: password,
-                url: 'https://firebasestorage.googleapis.com/v0/b/restaurant-5e5c6.appspot.com/o/icons%2Fuser.png?alt=media&token=1d7cb465-7ec3-4881-9a32-0b6041663c0a',
+
+        if(nom!=''&&prenom!=''&&numero!=''){
+            fetch('http://192.168.137.1/restaurant_max/insert.php', {
+                method: 'POST',
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    nom: nom,
+                    tel: numero,
+                    adresse: prenom+'',
+                    image: 'image',
+                })
+            }).then((response) => response.json())
+              .then((responseJson) => {
+                  Alert.alert(responseJson);
+              }).catch((error) => {
+                  Alert.alert(error);
             })
-    
-            props.navigation.navigate('Connexion')
+            Alert.alert('Enregistrement effectué avec succès !!')
+        }else{
+            Alert.alert('Veuillez remplir tous les champs !!');
         }
     }
 
-    const annuler = ()=>{
-        
+    const handleSend = async (num, code)=> {
+        const numbersArr = [num];
+        const isAvailable = await SMS.isAvailableAsync()
+        if (isAvailable) {
+          while (numbersArr.length > 0) {
+            const n = numbersArr.pop()
+            const result = await SMS.sendSMSAsync(n, 'Bienvenu sur MAXI\'IN APP\n\t Votre code est: '+code);
+            console.log('results', result)
+          }
+        } else {
+          // misfortune... there's no SMS available on this device
+        }
     }
+
+    const handleTakeImage = (source)=>{
+        setUrl(source);
+        setModalVisible(false)
+    }
+
+    const showAlertInfo = (title, sms)=>{
+        Alert.alert(
+            title,
+            sms,
+            [
+                {
+                    text: 'COMPRIS',
+                    onPress: () => console.log(title)
+                }
+            ]
+        )
+    }
+
+    const pickImage = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.All,
+          allowsEditing: true,
+          aspect: [4, 3],
+          quality: 1,
+        });
+    
+        if (!result.cancelled) {
+          setUrl(result.uri);
+        }
+    };
 
     return (
         <ScrollView style={styles.container}>
@@ -79,55 +126,29 @@ const Inscription = (props)=>{
                 </View>
             </View>
 
-            <View style={styles.container_mail}>
-                <Text style={styles.libelle}>Mot de passe</Text>
-                <TextInput
-                    style={styles.search}
-                    onChangeText={setPassword}
-                    value={password}
-                    secureTextEntry={true}
-                />
-            </View>
-
-            <View style={styles.container_mail}>
-                <Text style={styles.libelle}>Repeter le mot de passe</Text>
-                <TextInput
-                    style={styles.search}
-                    onChangeText={setReapetPassword}
-                    value={reapetPassword}
-                    secureTextEntry={true}
-                />
-            </View>
-
             <TouchableOpacity style={styles.container_img}>
                 <Image
                     style={styles.img}
-                    source={{uri:'https://firebasestorage.googleapis.com/v0/b/restaurant-5e5c6.appspot.com/o/amburger2.jpg?alt=media&token=2fb270d8-37f6-423d-ab1d-a60bb9b5bf38'}}
+                    source={{uri:url}}
                 />
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.container_img}>
-                <Image
-                    style={styles.camera}
-                    source={{uri:'https://firebasestorage.googleapis.com/v0/b/restaurant-5e5c6.appspot.com/o/icons%2Ffolder.png?alt=media&token=ceca8731-d02e-4951-93f9-0b0bd20295ed'}}
-                />
+            <TouchableOpacity style={styles.container_img} onPress={()=>pickImage()}>
+                <FontAwesome style={styles.camera3} name='folder'/>
                 <Text style={styles.camera_text}>Choisir une image</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.container_img}>
-                <Image
-                    style={styles.camera}
-                    source={{uri:'https://firebasestorage.googleapis.com/v0/b/restaurant-5e5c6.appspot.com/o/icons%2Fcamera.png?alt=media&token=238ca6e2-3496-46ce-b66e-85ed8816a8d2'}}
-                />
+            <TouchableOpacity style={styles.container_img}  onPress={() => setModalVisible(true)} >
+                <FontAwesome style={styles.camera3} name='camera-retro'/>
                 <Text style={styles.camera_text}>Prende une photo</Text>
             </TouchableOpacity>
 
             <View style={styles.container_btn}>
                 <TouchableOpacity style={styles.btn_success} onPress={()=>enregistrer()}>
-                    <Text style={styles.compte_social}>Valider</Text>
+                    <Text style={styles.compte_social}>S'enregistrer</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.btn_cancel} onPress={()=>annuler()}>
-                    <Text style={styles.compte_social}>Annuler</Text>
+                <TouchableOpacity style={styles.btn_cancel} onPress={()=>props.navigation.navigate('Connexion')}>
+                    <Text style={styles.compte_social}>Se connecter</Text>
                 </TouchableOpacity>
             </View>
 
@@ -152,13 +173,12 @@ const styles = StyleSheet.create({
     },
     container_comment: {
         marginBottom: 4,
-        marginLeft: 2,
         padding: 4,
     },
     container_btn: {
         justifyContent: 'center',
         alignItems: 'flex-start',
-        marginBottom: 20,
+        marginTop: 100,
         flexDirection: 'row',
         padding: 2,
     },
@@ -188,7 +208,7 @@ const styles = StyleSheet.create({
     },
     btn_cancel: {
         flex: 1,
-        height: 30,
+        height: 40,
         borderRadius: 4,
         fontSize: 14,
         justifyContent: 'center',
@@ -199,7 +219,7 @@ const styles = StyleSheet.create({
     },
     btn_success: {
         flex: 1,
-        height: 30,
+        height: 40,
         borderRadius: 4,
         fontSize: 14,
         justifyContent: 'center',
@@ -242,6 +262,21 @@ const styles = StyleSheet.create({
         color: 'grey',
         marginTop: 8,
         marginRight: 10,
+    },
+    camera: {
+        width: 30,
+        height: 30,
+        borderRadius: 4,
+    },
+    camera_text: {
+        fontSize: 10,
+        fontStyle: 'italic',
+        color: '#248e44',
+    },
+    camera3: {
+        fontSize: 30,
+        color: '#248e44',
+        borderRadius: 4,
     },
 });
 

@@ -17,18 +17,26 @@ export default class Produit_home extends React.Component {
             <View style={this._get_style().container}>
                 <View style={this._get_style().container2}>
                     <View style={this._get_style().texte}>
-                        <Texte propriete={[prop.libelle, 12, 'bold', 'normal', 'serif', 'black']}/>
+                        <Texte propriete={[prop.libelle, 20, 'bold', 'normal', 'sans-serif', 'black']}/>
+                    </View>
+
+                    <View style={this._get_style().texte}>
+                        <Texte propriete={['Saved with French fries', 17, 'normal', 'normal', 'sans-serif', 'black']}/>
                     </View>
 
                     <View style={this._get_style().btn_price}>
                         <View style={this._get_style().price}>
-                            <Texte propriete={[prop.prix+' F CFA', 14, 'bold', 'italic', 'serif', '#248e44']}/>
+                            <Texte propriete={[prop.prix+' f cfa', 20, 'bold', 'italic', 'sans-serif', '#248e44']}/>
                         </View>
                     </View>
+                    
                 </View>
 
                 <View style={this._get_style().img}>
-                    <Image style={this._get_style().img2} source={{uri: prop.url}} />
+                    <Image
+                    style={this._get_style().img2}
+                    source={{uri: 'http://192.168.1.64/restaurant_max/img_prod/'+prop.image+'.jpg'}}
+                    />
                 </View>
             </View>
         );
@@ -43,16 +51,16 @@ export default class Produit_home extends React.Component {
                     borderRadius: 4,
                 },
                 img2: {
-                    width: 80,
-                    height: 80,
+                    width: 90,
+                    height: 100,
                     borderRadius: 4,
                 },
                 container: {
                     flex: 1,
                     flexDirection: 'row',
-                    backgroundColor: '#f3f3f1',
+                    backgroundColor: '#fff',
                     borderRadius: 4,
-                    padding: 1,
+                    paddingHorizontal: 8,
                 },
                 container2: {
                     flex: 1,
@@ -60,6 +68,7 @@ export default class Produit_home extends React.Component {
                 texte: {
                     justifyContent: 'center',
                     marginLeft: 2,
+                    marginBottom: 6,
                 },
                 btn_price: {
                     flexDirection: 'row',

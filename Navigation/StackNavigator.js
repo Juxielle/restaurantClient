@@ -8,13 +8,14 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Home from '../src/Home'
 import ProduitList from '../src/ProduitList'
 import DetailProduit from '../src/DetailProduit'
+import Panier from "../src/Panier"
 //import Map from '../src/Map'
 
-//import Inscription from '../src/Inscription'
+/*import Inscription from '../src/Inscription'
 import Connexion from '../src/Connexion'
-import RunPage from '../src/RunPage'
-import Panier from "../src/Panier";
+import RunPage from '../src/RunPage';*/
 import Commandes from "../src/Commandes";
+//import CodeNumber from "../src/CodeNumber";
 
 const Stack = createStackNavigator();
 
@@ -28,27 +29,7 @@ const screenOptionStyle = {
 
 const MainStackNavigator = (props) => {
   return (
-    <Stack.Navigator initialRouteName="RunPage" screenOptions={screenOptionStyle}>
-        <Stack.Screen
-        name="RunPage" 
-        component={RunPage}
-        options={ styleNav('run', props) }
-        />     
-        <Stack.Screen
-        name="Panier" 
-        component={Panier}
-        options={ styleNav('Panier', props) }
-        />
-        <Stack.Screen
-        name="Commandes" 
-        component={Commandes}
-        options={ styleNav('Panier', props) }
-        />
-        <Stack.Screen
-        name="Connexion" 
-        component={Connexion}
-        options={ styleNav('Connexion', props) }
-        />
+    <Stack.Navigator initialRouteName="Home" screenOptions={screenOptionStyle}>
         <Stack.Screen
         name="Home" 
         component={Home}
@@ -63,6 +44,16 @@ const MainStackNavigator = (props) => {
         name="DetailProduit" 
         component={DetailProduit}
         options={ styleNav('Detail Produit', props) }
+        />
+        <Stack.Screen
+        name="Panier" 
+        component={Panier}
+        options={ styleNav('Panier', props) }
+        />
+        <Stack.Screen
+        name="Commandes" 
+        component={Commandes}
+        options={ styleNav('Panier', props) }
         />
     </Stack.Navigator>
   );
@@ -165,3 +156,31 @@ const styles = StyleSheet.create({
     top: 4,
   },
 })
+
+/*
+        <Stack.Screen
+        name="RunPage" 
+        component={RunPage}
+        options={ styleNav('run', props) }
+        />
+        <Stack.Screen
+        name="Inscription"
+        component={Inscription}
+        options={ styleNav('Inscription', props) }
+        />    
+        <Stack.Screen
+        name="Panier" 
+        component={Panier}
+        options={ styleNav('Panier', props) }
+        />
+        <Stack.Screen
+        name="Connexion" 
+        component={Connexion}
+        options={ styleNav('Connexion', props) }
+        />
+        <Stack.Screen
+        name="CodeNumber" 
+        component={CodeNumber}
+        options={ styleNav('Code', props) }
+        />
+*/
