@@ -27,9 +27,11 @@ const Panier =(props)=> {
         })
     }, [])
 
-    const handleAjout = (test)=>{
-        if(test){
+    const handleAjout = (test, etat)=>{
+        if(test && etat == 0){
             props.navigation.navigate('Home')
+        }else{
+            Alert.alert('Vous ne pouvez plus ajouter un produit, car votre commande est déjà confirmée !!')
         }
     }
 
@@ -62,7 +64,7 @@ const Panier =(props)=> {
         props.navigation.navigate('Commandes', {produits: item})
     }
 
-    /*const handlechangestate = (item, state, id2)=>{
+    const handlechangestate = (item, state, id2)=>{
         if(state == 0){
             /*fetch(HOST+'updateCommande.php', {
                     method: 'POST',
@@ -78,9 +80,9 @@ const Panier =(props)=> {
                       Alert.alert(responseJson);
                   }).catch((error) => {
                       Alert.alert(error);
-                })
+                })*/
         }
-    }*/
+    }
 
     return (
         <SafeAreaView style={styles.container}>

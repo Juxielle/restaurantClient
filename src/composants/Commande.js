@@ -56,7 +56,7 @@ const Commande =(props)=> {
                 <TouchableOpacity onPress={()=>props.handleMap(com)}>
                     <FontAwesome style={styles.map} name='map-marker'/>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={()=>props.handleAjout(true)}>
+                <TouchableOpacity onPress={()=>props.handleAjout(true, com.etat)}>
                     <FontAwesome style={styles.add} name='plus-square'/>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={()=>props.handleDialogPower(com.id)}>

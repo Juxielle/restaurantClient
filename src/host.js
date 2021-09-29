@@ -2,6 +2,6 @@
 
 // This is the routes.js file!
 
-const HOST = 'http://192.168.0.101/restaurant_max/';
+const HOST = 'http://192.168.1.71/restaurant_max/';
 
 export default HOST;
