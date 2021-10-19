@@ -84,7 +84,7 @@ const DetailProduit = (props) => {
             <View style={_get_style().container_img}>
                 <Image
                     style={_get_style().img}
-                    source={{uri: 'http://192.168.1.64/restaurant_max/img_prod/'+produit.image+'.jpg'}}
+                    source={{uri: HOST+'img_prod/'+produit.image+'.jpg'}}
                 />
                 <TouchableOpacity style={_get_style().contentfleche} onPress={()=>props.navigation.goBack()}>
                     <FontAwesome style={_get_style().fleche} name='arrow-left' />

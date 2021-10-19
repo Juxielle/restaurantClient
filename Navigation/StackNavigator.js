@@ -9,7 +9,8 @@ import Home from '../src/Home'
 import ProduitList from '../src/ProduitList'
 import DetailProduit from '../src/DetailProduit'
 import Panier from "../src/Panier"
-//import Map from '../src/Map'
+//import Map2 from '../src/Map2'
+import Map3 from '../src/Map3'
 
 /*import Inscription from '../src/Inscription'
 import Connexion from '../src/Connexion'
@@ -54,6 +55,11 @@ const MainStackNavigator = (props) => {
         name="Commandes" 
         component={Commandes}
         options={ styleNav('Panier', props) }
+        />
+        <Stack.Screen
+        name="Map3" 
+        component={Map3}
+        options={ styleNav('Map', props) }
         />
     </Stack.Navigator>
   );

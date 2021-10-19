@@ -57,7 +57,7 @@ const Panier =(props)=> {
     }
 
     const handleMap = (item)=>{
-        
+        props.navigation.navigate('Map3')
     }
 
     const produit = (item)=>{

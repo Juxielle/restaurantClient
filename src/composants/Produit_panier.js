@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Image, TouchableOpacity, View, Text } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import HOST from '../host';
 
 import Texte from './Texte'
 
@@ -13,7 +14,7 @@ const Produit_panier =(props)=> {
             <View style={styles.img}>
                 <Image
                 style={styles.img}
-                source={{uri: 'http://192.168.1.64/restaurant_max/img_prod/'+prop.image+'.jpg'}} 
+                source={{uri: HOST+'img_prod/'+prop.image+'.jpg'}} 
                 />
             </View>
             <View style={styles.texte}>

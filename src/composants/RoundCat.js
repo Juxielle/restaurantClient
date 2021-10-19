@@ -1,13 +1,15 @@
 import React from 'react';
 import { StyleSheet, Text, Image, View } from 'react-native';
 
+import HOST from '../host'
+
 const RoundCat = (props)=> {
     
     return (
         <View style={[{backgroundColor: props.couleurB}, styles.container]}>
             <Image
                 style={styles.img}
-                source = {{uri: 'http://192.168.1.64/restaurant_max/img_cat/'+props.datas.image+'.jpg'}}
+                source = {{uri: HOST+'img_cat/'+props.datas.image+'.jpg'}}
             />
             <Text 
                 style={[{color: props.couleurT}, styles.texte]}

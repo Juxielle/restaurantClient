@@ -3,6 +3,7 @@ import { StyleSheet, Image, View } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 import Texte from './Texte'
+import HOST from '../host'
 
 
 
@@ -22,7 +23,7 @@ export default class Produit_home extends React.Component {
                 <View style={this._get_style().img}>
                     <Image
                     style={this._get_style().img2}
-                    source={{uri: 'http://192.168.1.64/restaurant_max/img_cat/'+prop.image+'.jpg'}}
+                    source={{uri: HOST+'/img_cat/'+prop.image+'.jpg'}}
                     />
                 </View>
 
