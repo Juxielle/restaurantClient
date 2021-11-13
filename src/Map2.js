@@ -8,7 +8,9 @@ import {
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import MapViewDirections from "react-native-maps-directions";
 
-import { COLORS, images, FONTS, icons, SIZES, GOOGLE_API_KEY } from "../constants"
+import { COLORS, images, FONTS, icons, SIZES} from "../constants"
+
+const GOOGLE_API_KEY = 'AIzaSyB_pt5iF9KOV3012rqrmY1FeAcEDHZpHyY';
 
 const restaurant1 = {
     id: 1,

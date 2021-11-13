@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { StyleSheet, FlatList, View, TouchableOpacity, SafeAreaView, Alert } from 'react-native';
+import { StyleSheet, Button, FlatList, View, TouchableOpacity, SafeAreaView, Alert } from 'react-native';
 
 import ProduitCat from './composants/ProduitCat'
 import RoundCat from './composants/RoundCat';
@@ -37,7 +37,7 @@ const ProduitList = (props) => {
         setCouleurBack(cb)
 
         let ct = [...couleurText]
-        ct[id2-1] = '#fff'
+        ct[id2-1] = '#248e44'
         setCouleurText(ct)
 
     }, [])
@@ -66,6 +66,13 @@ const ProduitList = (props) => {
 
             <View style={_get_style().texte}>
                 <Texte propriete={[libelle, 22, 'bold', 'normal', 'sans-serif', 'black']}/>
+                <View  style={_get_style().btnCom}>
+                    <Button
+                        title='Commandez'
+                        color='green'
+                        onPress={()=>props.navigation.navigate('Localisation')}
+                    />
+                </View>
             </View>
             <FlatList
                 data = {donnees}
@@ -142,9 +149,16 @@ function _get_style(){
                 marginBottom: 8,
             },
             texte: {
-                justifyContent: 'center',
-                marginBottom: 30,
+                flexDirection: 'row',
+                //justifyContent: 'flex-start',
+                marginBottom: 20,
                 marginLeft: 8,
+            },
+            btnCom: {
+                flex: 1,
+                alignItems: 'flex-end',
+                borderRadius: 4,
+                marginRight: 5,
             },
         })
     )

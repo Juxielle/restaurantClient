@@ -6,7 +6,7 @@ import HOST from '../host'
 const RoundCat = (props)=> {
     
     return (
-        <View style={[{backgroundColor: props.couleurB}, styles.container]}>
+        <View style={[{borderColor: props.couleurB, borderWidth: 1}, styles.container]}>
             <Image
                 style={styles.img}
                 source = {{uri: HOST+'img_cat/'+props.datas.image+'.jpg'}}

@@ -29,39 +29,7 @@ const DetailProduit = (props) => {
     }
 
     const ajout_panier = ()=>{
-        Alert.alert(
-            "Information",
-            "Veuillez confirmer votre commande !!",
-            [
-              {
-                text: "Cancel",
-                onPress: () => console.log("Cancel Pressed"),
-                style: "cancel"
-              },
-              { text: "OK", onPress: () => {
-                fetch(HOST+'addCommande.php', {
-                    method: 'POST',
-                    headers: {
-                        "Accept": "application/json",
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        idProduit: produit.id,
-                        nombre: qte,
-                        idClient: 2,
-                        idLivraison: 1,
-                        etat: 0,
-                    })
-                }).then((response) => response.json())
-                  .then((responseJson) => {
-                      Alert.alert(responseJson);
-                  }).catch((error) => {
-                      Alert.alert(error);
-                })
-                Alert.alert('Enregistrement effectué avec succès !!')
-              } }
-            ]
-          );
+        props.navigation.navigate('Localisation');
     }
 
     const handleDialog = (nom)=>{
@@ -95,11 +63,11 @@ const DetailProduit = (props) => {
                 <View style={_get_style().container_title_price}>
                     <View style={_get_style().title_price}>
                         <View style={_get_style().title}>
-                            <Texte propriete={[produit.libelle, 15, 'bold', 'normal', 'serif', 'black']}/>
+                            <Texte propriete={[produit.libelle, 20, 'bold', 'normal', 'sans-serif', 'black']}/>
                         </View>
                         <View style={_get_style().price}>
                             <View style={_get_style().price1}>
-                                <Texte propriete={[produit.prix+' F CFA', 20, 'bold', 'normal', 'serif', '#248e44']}/>
+                                <Texte propriete={[produit.prix+' F CFA', 25, 'bold', 'normal', 'sans-serif', '#248e44']}/>
                             </View>
                         </View>
                     </View>
@@ -107,18 +75,18 @@ const DetailProduit = (props) => {
 
                 <View style={_get_style().btn1}>
                     <TouchableOpacity style={_get_style().btn_btn} onPress={()=>quantite(false)}>
-                        <Texte propriete={['-', 20, 'bold', 'normal', 'serif', 'white']}/>
+                        <Texte propriete={['-', 20, 'bold', 'normal', 'sans-serif', 'white']}/>
                     </TouchableOpacity>
                     <View style={_get_style().btn_btn2}>
-                        <Texte propriete={[qte+'', 12, 'bold', 'normal', 'serif', 'black']}/>
+                        <Texte propriete={[qte+'', 12, 'bold', 'normal', 'sans-serif', 'black']}/>
                     </View>
                     <TouchableOpacity style={_get_style().btn_btn} onPress={()=>quantite(true)}>
-                        <Texte propriete={['+', 20, 'bold', 'normal', 'serif', 'white']}/>
+                        <Texte propriete={['+', 20, 'bold', 'normal', 'sans-serif', 'white']}/>
                     </TouchableOpacity>
                 </View>
                 
                 <TouchableOpacity style={_get_style().btn2} onPress={()=>ajout_panier()}>
-                        <Texte propriete={['Ajouter au panier', 15, 'normal', 'normal', 'serif', 'white']}/>
+                        <Texte propriete={['COMMANDEZ MAINTENANT', 16, 'bold', 'normal', 'sans-serif', 'white']}/>
                 </TouchableOpacity>
             </View>
 

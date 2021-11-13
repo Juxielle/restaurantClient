@@ -10,12 +10,13 @@ import ProduitList from '../src/ProduitList'
 import DetailProduit from '../src/DetailProduit'
 import Panier from "../src/Panier"
 //import Map2 from '../src/Map2'
-import Map3 from '../src/Map3'
+//import Map2 from '../src/Map2'
 
 /*import Inscription from '../src/Inscription'
 import Connexion from '../src/Connexion'
 import RunPage from '../src/RunPage';*/
 import Commandes from "../src/Commandes";
+import Localisation from "../src/Localisation";
 //import CodeNumber from "../src/CodeNumber";
 
 const Stack = createStackNavigator();
@@ -57,9 +58,9 @@ const MainStackNavigator = (props) => {
         options={ styleNav('Panier', props) }
         />
         <Stack.Screen
-        name="Map3" 
-        component={Map3}
-        options={ styleNav('Map', props) }
+        name="Localisation" 
+        component={Localisation}
+        options={ styleNav('Localisation', props) }
         />
     </Stack.Navigator>
   );
@@ -77,8 +78,7 @@ const styleNav = (title, props) => {
       title: title,
       headerLeft: null,
       headerRight: ()=>(<TouchableOpacity onPress={()=>props.navigation.navigate('Panier')}>
-                          <FontAwesome style={styles.camera3} name='shopping-cart'/>
-                          <Text style={styles.rounded}>8</Text>
+                          <FontAwesome style={styles.camera3} name='cog'/>
                         </TouchableOpacity>),
       headerStyle: {
           height: 50,
@@ -107,7 +107,7 @@ const styleNav = (title, props) => {
           },
       }
     )
-  }else if(title == 'run' || title == 'Detail Produit'){
+  }else if(title == 'run' || title == 'Map' || title == 'Detail Produit'){
     return (
       {
       headerShown: false,
@@ -143,23 +143,10 @@ const styleNav = (title, props) => {
 
 const styles = StyleSheet.create({
   camera3: {
-    fontSize: 30,
-    color: '#fb7f35',
+    fontSize: 25,
+    color: 'grey',
     borderRadius: 4,
     marginRight: 6,
-  },
-  rounded:{
-    fontSize: 8,
-    fontStyle: 'italic',
-    backgroundColor: '#248e44',
-    color: '#fff',
-    textAlign: 'center',
-    borderRadius: 4,
-    paddingHorizontal: 4,
-    paddingVertical: 2,
-    position: 'absolute',
-    left: -4,
-    top: 4,
   },
 })
 
