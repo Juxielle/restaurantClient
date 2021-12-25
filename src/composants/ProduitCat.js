@@ -3,6 +3,7 @@ import { StyleSheet, CheckBox, Image, TouchableOpacity, View } from 'react-nativ
 
 import Texte from './Texte'
 import HOST from '../host'
+import { connect } from 'react-redux';
 
 const ProduitCat = (props)=> {
 
@@ -11,21 +12,37 @@ const ProduitCat = (props)=> {
     const [qte, setQte] = React.useState(0);
     const [colorBtn, setColorBtn] = React.useState('grey');
 
+    React.useEffect(() => {
+        const index = props.commandes.findIndex(item => item.produit.id === prop.id)
+        if(index !== -1){
+            setQte(props.commandes[index].quantite); setSelection(true); setColorBtn('#11ac00');
+        }else{ 
+            setQte(0); setSelection(false); setColorBtn('grey');
+        } 
+    }, [])
+
     const quantite = (typeBtn)=>{
         if(typeBtn && isSelected){
             setQte(qte+1);
+            const action = { type: 'MODIFIER_QTE', value: {produit: prop, quantite: qte} }
+            props.dispatch(action)
         }else if(qte>0 && isSelected){
             setQte(qte-1);
+            const action = { type: 'MODIFIER_QTE', value: {produit: prop, quantite: qte} }
+            props.dispatch(action)
         }
     }
 
-    const selected = ()=>{
+    const selected = () => {
         //On ajoute à la variable globale de la commande
-        if(isSelected){
+        const index = props.commandes.findIndex(item => item.produit.id == prop.id)
+        if(index !== -1){
             setQte(0); setSelection(false); setColorBtn('grey');
         }else{ 
             setQte(1); setSelection(true); setColorBtn('#11ac00');
         }
+        const action = { type: 'MES_COMMANDES', value: {produit: prop, quantite: qte} }
+        props.dispatch(action)
     }
 
     return (
@@ -72,7 +89,13 @@ const ProduitCat = (props)=> {
     );
 }
 
-export default ProduitCat;
+//Relier les données de notre state global aux props du component
+//Dès que le state global change, il est mapper automatiquement dans les props du component
+const mapStateToProps = (state)=>{
+    return state != undefined ? { commandes: state.commandes } : { commandes: [] }
+}
+
+export default connect( mapStateToProps )(ProduitCat);
 
 const _get_style = ()=>{
     return (

@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import { StyleSheet, Text, TextInput, Alert, View, ScrollView, TouchableOpacity} from 'react-native';
-import firebase from 'firebase'
 import * as SMS from 'expo-sms';
 import * as SQLite from "expo-sqlite";
 
@@ -26,22 +25,9 @@ const Connexion = (props)=>{
     const [numero, setNumero] = useState();
 
     useEffect(() => {
-        var firebaseConfig = {
-            apiKey: "AIzaSyBv-sO25zuNtfRUgSDVaRLmZXAayi4vWMg",
-            authDomain: "restaurant-5e5c6.firebaseapp.com",
-            databaseURL: "https://restaurant-5e5c6-default-rtdb.firebaseio.com",
-            projectId: "restaurant-5e5c6",
-            storageBucket: "restaurant-5e5c6.appspot.com",
-            messagingSenderId: "104661562958",
-            appId: "1:104661562958:web:e3150aae2d4028d11b751f"
-        };
-
-        if (!firebase.apps.length) {
-            firebase.initializeApp(firebaseConfig);
-         }else {
-            firebase.app(); // if already initialized, use that one
-         }
-         
+        if(props.num != null){
+            props.navigation.navigate('Home');
+        } 
     }, [])
 
     const genereCode = ()=>{
@@ -78,26 +64,18 @@ const Connexion = (props)=>{
     }
 
     const enregistrer = ()=>{
-        firebase.database().ref('clients').on('value', (data)=>{
-            let donnees = [];
-            if(data.toJSON() != undefined || data.toJSON() != null){
-                donnees = Object.values(data.toJSON())
-                for(let i=0; i<=donnees.length-1; i++){
-                    if(numero == donnees[i].numero){
-                        db.transaction(
-                            (tx) => {
-                                tx.executeSql("insert into numeros (id, numero) values (0, ?)", [numero]);
-                                setTimeout(()=>{
-                                    props.navigation.navigate('Home');
-                                }, 2100)
-                            },
-                        ); break;
-                    }else if(i == donnees.length-1){
-                        showAlertInfo('Information', 'Numero non reconnu !!\nEnregistrez-vous si vous n\'avez pas de compte');
-                    }
-                }
-            }
-        })
+        if(props.num == '1'){
+            db.transaction(
+                (tx) => {
+                    tx.executeSql("insert into numeros (id, numero) values (0, ?)", [numero]);
+                    setTimeout(()=>{
+                        props.navigation.navigate('Home');
+                    }, 2100)
+                },
+            );
+        }else {
+            showAlertInfo('Information', 'Numero non reconnu !!\nEnregistrez-vous si vous n\'avez pas de compte');
+        }
     }
 
     return (

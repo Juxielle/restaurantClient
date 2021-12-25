@@ -2,8 +2,7 @@ import React, {useEffect, useState} from 'react';
 import { StyleSheet, Alert, Text, TextInput, Image, View, ScrollView, TouchableOpacity} from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
-import * as ImagePicker from 'expo-image-picker';
-import CameraPhoto from './composants/CameraPhoto';
+import HOST from './host';
 
 const Inscription = (props)=>{
 
@@ -11,7 +10,6 @@ const Inscription = (props)=>{
     const [prenom, setPrenom] = useState('');
     const [numero, setNumero] = useState();
     const [url, setUrl] = useState('');
-    const [modalVisible, setModalVisible] = useState(false);
 
     useEffect(() => {
 
@@ -24,9 +22,8 @@ const Inscription = (props)=>{
     }
 
     const enregistrer = ()=>{
-
-        if(nom!=''&&prenom!=''&&numero!=''){
-            fetch('http://192.168.137.1/restaurant_max/insert.php', {
+        if(nom!=''&&prenom!=''&&numero!=null){
+            fetch(HOST+'insert.php', {
                 method: 'POST',
                 headers: {
                     "Accept": "application/json",
@@ -35,16 +32,15 @@ const Inscription = (props)=>{
                 body: JSON.stringify({
                     nom: nom,
                     tel: numero,
-                    adresse: prenom+'',
+                    adresse: 'adresse',
                     image: 'image',
                 })
             }).then((response) => response.json())
               .then((responseJson) => {
-                  Alert.alert(responseJson);
+                Alert.alert('Enregistrement effectué avec succès !!')
               }).catch((error) => {
-                  Alert.alert(error);
+                Alert.alert('Enregistrement non effectué !!')
             })
-            Alert.alert('Enregistrement effectué avec succès !!')
         }else{
             Alert.alert('Veuillez remplir tous les champs !!');
         }
@@ -64,14 +60,9 @@ const Inscription = (props)=>{
         }
     }
 
-    const handleTakeImage = (source)=>{
-        setUrl(source);
-        setModalVisible(false)
-    }
-
     const showAlertInfo = (title, sms)=>{
         Alert.alert(
-            title,
+            title+'',
             sms,
             [
                 {
@@ -81,19 +72,6 @@ const Inscription = (props)=>{
             ]
         )
     }
-
-    const pickImage = async () => {
-        let result = await ImagePicker.launchImageLibraryAsync({
-          mediaTypes: ImagePicker.MediaTypeOptions.All,
-          allowsEditing: true,
-          aspect: [4, 3],
-          quality: 1,
-        });
-    
-        if (!result.cancelled) {
-          setUrl(result.uri);
-        }
-    };
 
     return (
         <ScrollView style={styles.container}>
@@ -133,16 +111,6 @@ const Inscription = (props)=>{
                 />
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.container_img} onPress={()=>pickImage()}>
-                <FontAwesome style={styles.camera3} name='folder'/>
-                <Text style={styles.camera_text}>Choisir une image</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.container_img}  onPress={() => setModalVisible(true)} >
-                <FontAwesome style={styles.camera3} name='camera-retro'/>
-                <Text style={styles.camera_text}>Prende une photo</Text>
-            </TouchableOpacity>
-
             <View style={styles.container_btn}>
                 <TouchableOpacity style={styles.btn_success} onPress={()=>enregistrer()}>
                     <Text style={styles.compte_social}>S'enregistrer</Text>
@@ -178,7 +146,7 @@ const styles = StyleSheet.create({
     container_btn: {
         justifyContent: 'center',
         alignItems: 'flex-start',
-        marginTop: 100,
+        marginTop: 60,
         flexDirection: 'row',
         padding: 2,
     },

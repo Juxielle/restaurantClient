@@ -29,16 +29,25 @@ const RunPage = (props) => {
                 tx.executeSql(
                     "create table if not exists numeros (id integer primary key not null, numero varchar);"
                 );
-                tx.executeSql("select * from numeros where id = 0", [], (_, { rows }) =>{
-                    setNumero(rows._array[0].numero)
-                });
             },
         );
 
         setTimeout(()=>{
-            if(numero != null) props.navigation.navigate('Connexion');
-            else props.navigation.navigate('Connexion');
-        }, 2100)
+            db.transaction(
+                (tx) => {
+                    tx.executeSql("select numero from numeros where id = 0", [], (_, { rows }) =>{
+                        setNumero(rows._array[0].numero)
+                        console.log(numero)
+                    });
+                },
+            );
+        }, 1000)
+
+        setTimeout(()=>{
+            console.log(numero)
+            if(numero != null) props.navigation.navigate('Connexion', {num: numero});
+            else props.navigation.navigate('Connexion', {numero: numero});
+        }, 2000)
     }, [])
 
     return (

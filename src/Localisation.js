@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import { StyleSheet, Alert, Text, TextInput, Image, View, ScrollView, TouchableOpacity, Button} from 'react-native';
+import FPicker from './composants/FPicker';
 
 
 const Localisation = (props)=>{
@@ -57,11 +58,7 @@ const Localisation = (props)=>{
                     <Text style={styles.titleT}>VOTRE POSITION ACTUELLE</Text>
                 </View>
                 <View style={styles.container_seach}>
-                    <TextInput
-                        style={styles.search}
-                        onChangeText={setNom}
-                        placeholder = 'COMMUNE'
-                    />
+                    <FPicker />
                 </View>
                 <View style={styles.container_seach}>
                     <TextInput
@@ -93,6 +90,13 @@ const Localisation = (props)=>{
                     onPress={()=>commander()}
                     />
             </View>
+            <View style={styles.container_btnPE}>
+                <Button
+                    color='orange'
+                    title='POSITIONS ENREGISTREES'
+                    onPress={()=>commander()}
+                    />
+            </View>
         </ScrollView>
     );
 }
@@ -107,6 +111,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         padding: 2,
         marginTop: 100,
+    },
+    container_btnPE: {
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+        padding: 2,
+        marginTop: 10,
     },
     search: {
         fontSize: 20,

@@ -12,9 +12,9 @@ import Panier from "../src/Panier"
 //import Map2 from '../src/Map2'
 //import Map2 from '../src/Map2'
 
-/*import Inscription from '../src/Inscription'
+import Inscription from '../src/Inscription'
 import Connexion from '../src/Connexion'
-import RunPage from '../src/RunPage';*/
+import RunPage from '../src/RunPage';
 import Commandes from "../src/Commandes";
 import Localisation from "../src/Localisation";
 //import CodeNumber from "../src/CodeNumber";
@@ -31,7 +31,22 @@ const screenOptionStyle = {
 
 const MainStackNavigator = (props) => {
   return (
-    <Stack.Navigator initialRouteName="Home" screenOptions={screenOptionStyle}>
+    <Stack.Navigator initialRouteName="RunPage" screenOptions={screenOptionStyle}>
+        <Stack.Screen
+        name="RunPage" 
+        component={RunPage}
+        options={(props)=> styleNav('run', props) }
+        />
+        <Stack.Screen
+        name="Inscription" 
+        component={Inscription}
+        options={(props)=> styleNav('Inscription', props) }
+        />
+        <Stack.Screen
+        name="Connexion" 
+        component={Connexion}
+        options={(props)=> styleNav('Connexion', props) }
+        />
         <Stack.Screen
         name="Home" 
         component={Home}

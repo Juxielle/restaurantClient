@@ -79,7 +79,9 @@ const ProduitList = (props) => {
                 keyExtractor={item => donnees.indexOf(item).toString()}
                 renderItem={({item}) => (
                     <View style={_get_style().container_prod}>
-                        <TouchableOpacity style={_get_style().produit2} onPress={()=>detailProduit(item, donnees.indexOf(item))}><ProduitCat propriete={item}/></TouchableOpacity>
+                        <TouchableOpacity style={_get_style().produit2} onPress={()=>detailProduit(item, donnees.indexOf(item))}>
+                            <ProduitCat propriete={item}/>
+                        </TouchableOpacity>
                     </View>
                 )}
             />
