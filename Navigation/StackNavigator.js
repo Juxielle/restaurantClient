@@ -17,6 +17,7 @@ import Connexion from '../src/Connexion'
 import RunPage from '../src/RunPage';
 import Commandes from "../src/Commandes";
 import Localisation from "../src/Localisation";
+import NotificationPush from "../src/Notification";
 //import CodeNumber from "../src/CodeNumber";
 
 const Stack = createStackNavigator();
@@ -31,11 +32,16 @@ const screenOptionStyle = {
 
 const MainStackNavigator = (props) => {
   return (
-    <Stack.Navigator initialRouteName="RunPage" screenOptions={screenOptionStyle}>
+    <Stack.Navigator initialRouteName="Home" screenOptions={screenOptionStyle}>
         <Stack.Screen
         name="RunPage" 
         component={RunPage}
         options={(props)=> styleNav('run', props) }
+        />
+        <Stack.Screen
+        name="NotificationPush" 
+        component={NotificationPush}
+        options={(props)=> styleNav('notification', props) }
         />
         <Stack.Screen
         name="Inscription" 

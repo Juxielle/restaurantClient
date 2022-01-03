@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { StyleSheet, Alert, Image, TouchableOpacity, View } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import { connect } from 'react-redux';
 
 import Texte from './composants/Texte'
 import HOST from './host'
@@ -15,7 +16,13 @@ const DetailProduit = (props) => {
     const id = props.route.params.id;
 
     useEffect(() => {
-
+        const index = props.commandes.findIndex(item => item.produit.id === produit.id)
+        if(index !== -1){
+            setQte(props.commandes[index].quantite);
+        }else{
+            const action = { type: 'MES_COMMANDES', value: {produit: produit, quantite: qte} }
+            props.dispatch(action)
+        } 
     }, [])
 
     const getProduit = (index)=>{
@@ -193,4 +200,8 @@ function _get_style(){
     )
 }
 
-export default DetailProduit;
+const mapStateToProps = (state)=>{
+    return state != undefined ? { commandes: state.commandes } : { commandes: [] }
+}
+
+export default connect( mapStateToProps )(DetailProduit);

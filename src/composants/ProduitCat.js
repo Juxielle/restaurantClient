@@ -24,11 +24,11 @@ const ProduitCat = (props)=> {
     const quantite = (typeBtn)=>{
         if(typeBtn && isSelected){
             setQte(qte+1);
-            const action = { type: 'MODIFIER_QTE', value: {produit: prop, quantite: qte} }
+            const action = { type: 'MODIFIER_QTE', value: {produit: prop, quantite: qte+1} }
             props.dispatch(action)
         }else if(qte>0 && isSelected){
             setQte(qte-1);
-            const action = { type: 'MODIFIER_QTE', value: {produit: prop, quantite: qte} }
+            const action = { type: 'MODIFIER_QTE', value: {produit: prop, quantite: qte-1} }
             props.dispatch(action)
         }
     }
