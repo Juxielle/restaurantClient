@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import { StyleSheet, Alert, SafeAreaView, FlatList, Image, TouchableOpacity, View } from 'react-native';
 
-import Commande from './composants/Commande'
+import Commande from './composants/Commande2'
 import HOST from './host'
 
 const Panier =(props)=> {
@@ -57,7 +57,7 @@ const Panier =(props)=> {
     }
 
     const handleMap = (item)=>{
-        props.navigation.navigate('Map3')
+        props.navigation.navigate('Map')
     }
 
     const produit = (item)=>{
@@ -86,18 +86,24 @@ const Panier =(props)=> {
 
     return (
         <SafeAreaView style={styles.container}>
+            <View style={styles.content_logo}>
+                <Image
+                    style={styles.logo}
+                    source={require('../assets/max_logo.png')}
+                />
+            </View>
             <FlatList
                 data = {donnees}
                 keyExtractor={item => item.id}
                 renderItem={({item}) => (
-                    <TouchableOpacity style={styles.produit} onPress={()=>produit(item)}>
+                    <View style={styles.produit} onPress={()=>produit(item)}>
                         <Commande
                             commande={item}
                             handleAjout={handleAjout} 
                             handleDialogPower={handleDialogPower}
                             handleMap={handleMap}
                         />
-                    </TouchableOpacity>
+                    </View>
                 )}
             />
         </SafeAreaView>
@@ -108,7 +114,7 @@ const Panier =(props)=> {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: '#E4E4E4',
         padding: 2,
         paddingTop: 8,
     },
@@ -123,6 +129,15 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    content_logo: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 10,
+    },
+    logo: {
+        width: 100,
+        height: 35
     },
 })
 

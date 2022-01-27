@@ -32,7 +32,7 @@ const RunPage = (props) => {
             },
         );
 
-        setTimeout(()=>{
+        /*setTimeout(()=>{
             db.transaction(
                 (tx) => {
                     tx.executeSql("select numero from numeros where id = 0", [], (_, { rows }) =>{
@@ -41,12 +41,13 @@ const RunPage = (props) => {
                     });
                 },
             );
-        }, 1000)
+        }, 1000)*/
 
         setTimeout(()=>{
-            console.log(numero)
-            if(numero != null) props.navigation.navigate('Connexion', {num: numero});
-            else props.navigation.navigate('Connexion', {numero: numero});
+            //console.log(numero)
+            //if(numero != null) props.navigation.navigate('Connexion', {num: numero});
+            //else props.navigation.navigate('Connexion', {numero: numero});
+            props.navigation.navigate('Home')
         }, 2000)
     }, [])
 
@@ -67,16 +68,16 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#fff',
+        backgroundColor: '#FFFFFF',
     },
     text: {
-        fontSize: 14,
+        fontSize: 12,
         fontStyle: 'italic',
-        color: '#248e44',
+        color: '#C1BCBC',
     },
     logo: {
-        width: 150, 
-        height: 50,
+        width: 100, 
+        height: 35,
         borderRadius: 4,
     },
 })

@@ -9,7 +9,7 @@ import Home from '../src/Home'
 import ProduitList from '../src/ProduitList'
 import DetailProduit from '../src/DetailProduit'
 import Panier from "../src/Panier"
-//import Map2 from '../src/Map2'
+import Map from '../src/Map3'
 //import Map2 from '../src/Map2'
 
 import Inscription from '../src/Inscription'
@@ -83,6 +83,11 @@ const MainStackNavigator = (props) => {
         component={Localisation}
         options={ styleNav('Localisation', props) }
         />
+        <Stack.Screen
+        name="Map" 
+        component={Map}
+        options={ styleNav('Map', props) }
+        />
     </Stack.Navigator>
   );
 }
@@ -99,7 +104,7 @@ const styleNav = (title, props) => {
       title: title,
       headerLeft: null,
       headerRight: ()=>(<TouchableOpacity onPress={()=>props.navigation.navigate('Panier')}>
-                          <FontAwesome style={styles.camera3} name='cog'/>
+                          <FontAwesome style={styles.camera3} name='shopping-cart'/>
                         </TouchableOpacity>),
       headerStyle: {
           height: 50,
@@ -119,9 +124,9 @@ const styleNav = (title, props) => {
       headerLeft: null,
       headerStyle: {
           height: 50,
-          backgroundColor: '#f3f3f1',
+          backgroundColor: '#E4E4E4',
           },
-          headerTintColor: '#248e44',
+          headerTintColor: '#040404',
           headerTitleStyle: {
           fontSize: 20,
           textAlign: 'center',
@@ -134,9 +139,9 @@ const styleNav = (title, props) => {
       headerShown: false,
       headerStyle: {
           height: 50,
-          backgroundColor: '#f3f3f1',
+          backgroundColor: '#E4E4E4',
           },
-          headerTintColor: '#248e44',
+          headerTintColor: '#040404',
           headerTitleStyle: {
           fontSize: 20,
           textAlign: 'center',
@@ -149,9 +154,9 @@ const styleNav = (title, props) => {
       title: title,
       headerStyle: {
           height: 50,
-          backgroundColor: '#f3f3f1',
+          backgroundColor: '#E4E4E4',
           },
-          headerTintColor: '#248e44',
+          headerTintColor: '#040404',
           headerTitleStyle: {
           fontSize: 20,
           textAlign: 'center',
@@ -165,7 +170,7 @@ const styleNav = (title, props) => {
 const styles = StyleSheet.create({
   camera3: {
     fontSize: 25,
-    color: 'grey',
+    color: '#70F386',
     borderRadius: 4,
     marginRight: 6,
   },

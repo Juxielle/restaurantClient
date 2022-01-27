@@ -64,7 +64,7 @@ const currentLocation = {
     }
 }
 
-const Map2 = ({ route, navigation }) => {
+const Map = ({ route, navigation }) => {
 
     const mapView = React.useRef()
 
@@ -430,4 +430,4 @@ const Map2 = ({ route, navigation }) => {
     )
 }
 
-export default Map2;
+export default Map;
