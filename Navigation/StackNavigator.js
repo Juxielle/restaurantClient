@@ -104,7 +104,7 @@ const styleNav = (title, props) => {
       title: title,
       headerLeft: null,
       headerRight: ()=>(<TouchableOpacity onPress={()=>props.navigation.navigate('Panier')}>
-                          <FontAwesome style={styles.camera3} name='shopping-cart'/>
+                          <FontAwesome style={styles.camera3} name='shopping-basket'/>
                         </TouchableOpacity>),
       headerStyle: {
           height: 50,
@@ -169,8 +169,8 @@ const styleNav = (title, props) => {
 
 const styles = StyleSheet.create({
   camera3: {
-    fontSize: 25,
-    color: '#70F386',
+    fontSize: 20,
+    color: '#248e44',
     borderRadius: 4,
     marginRight: 6,
   },
